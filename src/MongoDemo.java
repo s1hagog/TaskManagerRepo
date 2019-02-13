@@ -14,8 +14,12 @@ public class MongoDemo implements MongoConnectionI {
 		
 	}
 
-	@Override
+	public MongoCollection getMongoCollection(String collectionName) {
+		return mongoDB.getCollection(collectionName);
+	}
+
 	public void dbConnection() {
+		// TODO Auto-generated method stub
 		try {			
 			 mongoClient = MongoClients.create("mongodb://alex_user:123qwe@cluster0-shard-00-00-fc9jq.azure.mongodb.net:27017,cluster0-shard-00-01-fc9jq.azure.mongodb.net:27017,cluster0-shard-00-02-fc9jq.azure.mongodb.net:27017/Csis3275?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true");
 			
@@ -27,16 +31,9 @@ public class MongoDemo implements MongoConnectionI {
 		
 	}
 
-	@Override
 	public void dbCloseConnection() {
 		// TODO Auto-generated method stub
-		//close the connection to the database
 		mongoClient.close();
-		
-	}
-	
-	public MongoCollection getMongoCollection(String collectionName) {
-		return mongoDB.getCollection(collectionName);
 	}
 
 }

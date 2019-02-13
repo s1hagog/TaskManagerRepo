@@ -7,16 +7,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="lib"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
-		<attributes>
-			<attribute name="module" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/nico/Desktop/CSIS3275/CsisFinal/lib/bson-3.10.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nico/Desktop/CSIS3275/CsisFinal/lib/mongodb-driver-3.10.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nico/Desktop/CSIS3275/CsisFinal/lib/mongodb-driver-core-3.10.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nico/Desktop/CSIS3275/CsisFinal/lib/mongo-java-driver-3.10.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nico/Desktop/CSIS3275/CsisFinal/lib/mongo-java-driver-3.10.1-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="lib" path="C:/Users/Santiago/Desktop/documentos nico/CSIS 3275/CSIS3275Final/CSIS3275Final/lib/bson-3.10.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Santiago/Desktop/documentos nico/CSIS 3275/CSIS3275Final/CSIS3275Final/lib/mongodb-driver-3.10.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Santiago/Desktop/documentos nico/CSIS 3275/CSIS3275Final/CSIS3275Final/lib/mongodb-driver-core-3.10.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Santiago/Desktop/documentos nico/CSIS 3275/CSIS3275Final/CSIS3275Final/lib/mongo-java-driver-3.10.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Santiago/Desktop/documentos nico/CSIS 3275/CSIS3275Final/CSIS3275Final/lib/mongo-java-driver-3.10.1-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

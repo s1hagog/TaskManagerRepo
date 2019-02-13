@@ -6,12 +6,17 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
+import javax.swing.text.Document;
+
+import com.mongodb.client.MongoCollection;
+
 import java.awt.Font;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
 public class UserInformationScreen  {
+	//region variables
 	private JFrame frame;
 	public JPanel panel;
 	public JLabel lblUserInformation;
@@ -26,6 +31,8 @@ public class UserInformationScreen  {
 	public JLabel lbl_UserProject;
 	public JLabel lbl_UserTask;
 	public JLabel lbl_UserDepartment;
+	//Mongo Db 
+	public MongoDemo mongodb;
 	/**
 	 * Launch the application.
 	 */
@@ -46,6 +53,8 @@ public class UserInformationScreen  {
 	 * Create the application.
 	 */
 	public UserInformationScreen() {
+		mongodb = new MongoDemo();
+		mongodb.dbConnection();
 		initialize();
 	}
 
@@ -70,7 +79,9 @@ public class UserInformationScreen  {
 	}
 	
 	public void getUserInformation() {
-		
+		MongoCollection<Document> collection =  mongodb.getMongoCollection("UserData");
+		Document query = collection.find().first();
+		//System.out.println(query.toJson());
 	}
 	
 	public void initializeLabels(){
