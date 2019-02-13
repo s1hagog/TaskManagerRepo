@@ -6,16 +6,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="lib"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
-			<attribute name="module" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/s1hag/Downloads/libs/bson-3.10.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/s1hag/Downloads/libs/mongodb-driver-3.10.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/s1hag/Downloads/libs/mongodb-driver-core-3.10.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/s1hag/Downloads/libs/mongo-java-driver-3.10.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/s1hag/Downloads/libs/mongo-java-driver-3.10.1-sources.jar"/>
+	<classpathentry kind="src" path="lib"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
