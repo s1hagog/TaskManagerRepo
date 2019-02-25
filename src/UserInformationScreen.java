@@ -46,6 +46,8 @@ public class UserInformationScreen  {
 	private JTextField textField_FName;
 	private JTextField textField_LName;
 	private JTextField textField_Department;
+	private JButton btnViewTask;
+	private JButton button;
 	/**
 	 * Launch the application.
 	 */
@@ -93,18 +95,13 @@ public class UserInformationScreen  {
 	
 	public void getUserInformation() {
 		collection =  mongodb.getMongoCollection("UserData");
-		org.bson.Document query = (org.bson.Document) collection.find(eq("id",1)).first();
-		List<org.bson.Document> task = (List<org.bson.Document>) query.get("project");
-		System.out.print(task.size());
-		for (org.bson.Document doc : task) {
-			System.out.print(doc.get("name"));
-        }
-		org.bson.Document department = (org.bson.Document) query.get("department");
-		
+
+		List userInformation = mongodb.getUserBasicData(1);
 		//fill the text boxes with the desired information
-		lbl_UserName.setText(query.get("first_name").toString());
-		lbl_UserLastName.setText(query.get("last_name").toString());
-		lbl_UserDepartment.setText(department.get("name").toString() + " department");
+		System.out.print(userInformation.toString());
+		lbl_UserName.setText(userInformation.get(0).toString());
+		lbl_UserLastName.setText(userInformation.get(1).toString());
+		lbl_UserDepartment.setText(userInformation.get(2).toString() + " department");
 	}
 	
 	public void initializeLabels(){
@@ -226,24 +223,34 @@ public class UserInformationScreen  {
 		});
 		
 		
-		/*task button should open an new page and close previouse one, interface needed for handling all screens
-		 * btn_EditUserInformation.addActionListener(new ActionListener() {
+		btn_EditUserInformation.setBounds(164, 219, 111, 23);
+		panel.add(btn_EditUserInformation);
+		
+		btnViewTask = new JButton("View Task");
+		btnViewTask.setBounds(10, 82, 89, 23);
+		frame.getContentPane().add(btnViewTask);
+		
+		button = new JButton("New button");
+		button.setBounds(10, 152, 89, 23);
+		frame.getContentPane().add(button);
+	
+	
+		//task button should open an new page and close previouse one, interface needed for handling all screens
+		btnViewTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// handle new window creation here
-				LoginScreen screen  = new LoginScreen();
 				EventQueue.invokeLater(new Runnable() {
 			        public void run() 
 			        {
 			           //inititate third screen and set make second screen invisible
-			        	new LoginScreen().setVisible(true);
+			        	TaskScreen tasks = new TaskScreen(1);
+
 			        	frame.setVisible(false);
 			        	frame.dispose();
 			        }
 				});
 			}
-		});*/
-		btn_EditUserInformation.setBounds(164, 219, 111, 23);
-		panel.add(btn_EditUserInformation);
+		});
 	}
 
 	public void setLabelComponentsVisible(boolean bool) {

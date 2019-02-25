@@ -1,3 +1,6 @@
+import static com.mongodb.client.model.Filters.eq;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mongodb.client.MongoClient;
@@ -34,6 +37,43 @@ public class MongoDemo implements MongoConnectionI {
 		// TODO Auto-generated method stub
 		mongoClient.close();
 	}
+	
+	public org.bson.Document getCollectionAndQueryID(int id){
+		dbConnection();
+		MongoCollection collection =  getMongoCollection("UserData");
+		org.bson.Document query = (org.bson.Document) collection.find(eq("id",id)).first();
+	
+		return query;
+	}
+	
+	public List getUserBasicData(int id) {
+		org.bson.Document query = getCollectionAndQueryID(id);
+		List<org.bson.Document> project = (List<org.bson.Document>) query.get("project");
+		System.out.print(project.size());
+		for (org.bson.Document doc : project) {
+			System.out.print(doc.get("name"));
+        }
+		org.bson.Document department = (org.bson.Document) query.get("department");
+		List userBasicInformation = new ArrayList();
+		userBasicInformation.add(query.get("first_name").toString());
+		userBasicInformation.add(query.get("last_name").toString());
+		userBasicInformation.add(department.get("name").toString());
+
+		
+		return userBasicInformation;
+	}
+	
+	
+	public List<org.bson.Document> getUserTaskData(int id) {
+		org.bson.Document query = getCollectionAndQueryID(id);
+		List<org.bson.Document> project = (List<org.bson.Document>) query.get("task");
+		System.out.print(project.size());
+		for (org.bson.Document doc : project) {
+			System.out.print(doc.get("name"));
+        }
+		return project;
+	}
+
 
 }
 
