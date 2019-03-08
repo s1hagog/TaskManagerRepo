@@ -49,7 +49,7 @@ public class MongoDemo implements MongoConnectionI {
 	
 	public List getUserBasicData(int id) {
 		org.bson.Document query = getCollectionAndQueryID(id);
-		List<org.bson.Document> project = (List<org.bson.Document>) query.get("project");
+		List<org.bson.Document> project = (List<org.bson.Document>)query.get("project");
 		System.out.print(project.size());
 		for (org.bson.Document doc : project) {
 			System.out.print(doc.get("name"));

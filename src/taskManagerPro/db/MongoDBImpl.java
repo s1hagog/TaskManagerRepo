@@ -2,6 +2,10 @@ package taskManagerPro.db;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bson.Document;
 
 import com.mongodb.MongoException;
@@ -61,8 +65,31 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		}
 		
 		this.dbCloseConnection();
-		// TODO Auto-generated method stub
 		return userpass;
+	}
+
+	public Map<String, String> getUserData(String username) {
+		this.dbOpenConnection();
+		Map<String, String> userMap = new HashMap<String, String>();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			org.bson.Document query = (org.bson.Document) collection.find(eq("email",username)).first();
+			org.bson.Document department = (org.bson.Document)query.get("department");
+			userMap.put("first_name", query.getString("first_name"));
+			userMap.put("last_name", query.getString("last_name"));
+			userMap.put("email", query.getString("email"));
+			userMap.put("dept_name", department.getString("name"));
+			userMap.put("dept_desc", department.getString("description"));
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting user data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		return userMap;
 	}
 	
 	

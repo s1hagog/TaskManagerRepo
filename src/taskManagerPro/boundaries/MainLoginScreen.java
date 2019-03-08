@@ -8,7 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import taskManagerPro.controllers.LoginController;
+import taskManagerPro.controllers.UserController;
 import taskManagerPro.entities.Login;
+import taskManagerPro.entities.User;
 
 import javax.swing.JRadioButton;
 import javax.swing.GroupLayout;
@@ -136,8 +138,24 @@ public class MainLoginScreen extends JFrame {
 				String password = passwordTxtField.getText();
 				Login l = new Login(username, password);
 				LoginController lc = new LoginController();
-				if(lc.isValid(l))
+				if(lc.isValid(l)) {
 					lblAttempt.setText("Login Successful");
+					final User user = new User();
+					UserController uc = new UserController();
+					uc.setUser(user, l);
+					EventQueue.invokeLater(new Runnable() {
+				        public void run() 
+				        {
+				        	System.out.println("Is something happening");
+				        	UserInfoScreen userInfoScreen  = new UserInfoScreen(user);
+				        	userInfoScreen.setVisible(true);
+				        	MainLoginScreen frame = new MainLoginScreen();
+							frame.setVisible(false);
+							frame.dispose();
+				        	
+				        }
+					});
+				}
 				else
 					lblAttempt.setText("Login Unsuccessful");
 			}
