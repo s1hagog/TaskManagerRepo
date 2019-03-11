@@ -146,7 +146,6 @@ public class MainLoginScreen extends JFrame {
 					EventQueue.invokeLater(new Runnable() {
 				        public void run() 
 				        {
-				        	System.out.println("Is something happening");
 				        	UserInfoScreen userInfoScreen  = new UserInfoScreen(user);
 				        	userInfoScreen.setVisible(true);
 				        	MainLoginScreen frame = new MainLoginScreen();

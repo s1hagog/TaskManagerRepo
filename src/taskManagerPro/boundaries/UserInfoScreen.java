@@ -17,6 +17,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UserInfoScreen extends JFrame {
 
@@ -93,6 +95,7 @@ public class UserInfoScreen extends JFrame {
 		btnEditInfo = new JButton("Edit Info");
 		
 		btnShowTasks = new JButton("Show Tasks");
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -168,6 +171,20 @@ public class UserInfoScreen extends JFrame {
 	//This methods is responsible for creating events
 	//////////////////////////////////////////////////////
 	private void createEvents() {
-		
+		btnShowTasks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	TasksInfoScreen taskInfoScreen  = new TasksInfoScreen(user);
+			        	taskInfoScreen.setVisible(true);
+			        	UserInfoScreen frame = new UserInfoScreen(user);
+						frame.setVisible(false);
+						frame.dispose();
+			        	
+			        }
+				});
+			}
+		});
 	}
 }

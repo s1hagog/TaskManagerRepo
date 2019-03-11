@@ -1,6 +1,9 @@
 package taskManagerPro.db;
 
+import java.util.List;
 import java.util.Map;
+
+import taskManagerPro.entities.Task;
 
 public class DBManager {
 	
@@ -14,6 +17,15 @@ public class DBManager {
 	public Map<String, String> getUserData(String username){
 		
 		return imp.getUserData(username);
+	}
+	
+	public List<Task> getTasks(String username){
+		
+		return imp.getTasks(username);
+	}
+	
+	public void setTaskStatus(String username, Task t) {
+		imp.setTaskStatus(username, t);
 	}
 
 }

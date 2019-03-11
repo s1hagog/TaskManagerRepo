@@ -1,6 +1,9 @@
 package taskManagerPro.db;
 
+import java.util.List;
 import java.util.Map;
+
+import taskManagerPro.entities.Task;
 
 public interface DBImplInterface {
 	
@@ -17,6 +20,12 @@ public interface DBImplInterface {
 	//At first was supposed to be ArrayList but key-value Map is better
 	public Map<String, String> getUserData(String username);
 	
+	//get tasks for user using login
+	//this one return list of tasks without any Maps;
+	public List<Task> getTasks(String username);
+	
+	//set new status for a task
+	public void setTaskStatus(String username, Task t);
 	
 
 }
