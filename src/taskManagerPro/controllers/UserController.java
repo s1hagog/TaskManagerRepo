@@ -24,5 +24,10 @@ public class UserController {
 		u.dept_desc = map.get("dept_desc");
 		
 	}
+	
+	public void deleteUser(User u) {
+		
+	}
+	
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import taskManagerPro.entities.Task;
+import taskManagerPro.entities.User;
 
 public interface DBImplInterface {
 	
@@ -23,6 +24,9 @@ public interface DBImplInterface {
 	//get tasks for user using login
 	//this one return list of tasks without any Maps;
 	public List<Task> getTasks(String username);
+	
+	//delete user from db
+	public void deleteUser(User u);
 	
 	//set new status for a task
 	public void setTaskStatus(String username, Task t);

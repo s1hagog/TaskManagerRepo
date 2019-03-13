@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import taskManagerPro.entities.Task;
+import taskManagerPro.entities.User;
 
 public class DBManager {
 	
@@ -26,6 +27,10 @@ public class DBManager {
 	
 	public void setTaskStatus(String username, Task t) {
 		imp.setTaskStatus(username, t);
+	}
+	
+	public void deleteUser(User u) {
+		imp.deleteUser(u);
 	}
 
 }

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import taskManagerPro.controllers.UserController;
 import taskManagerPro.entities.User;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -32,6 +33,7 @@ public class UserInfoScreen extends JFrame {
 	private JTextArea textAreaUserDeptDescription;
 	private JButton btnShowTasks;
 	private JButton btnEditInfo;
+	private JButton btnDeleteUser;
 
 	/**
 	 * Create the frame.
@@ -96,6 +98,9 @@ public class UserInfoScreen extends JFrame {
 		
 		btnShowTasks = new JButton("Show Tasks");
 		
+		btnDeleteUser = new JButton("Delete User");
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -110,16 +115,17 @@ public class UserInfoScreen extends JFrame {
 								.addComponent(lblLastName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(lblDepartment, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblUserLastName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblUserFirstName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblUserEmail, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblUserFirstName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblUserEmail, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
-									.addContainerGap(304, Short.MAX_VALUE))
+									.addComponent(btnDeleteUser)
+									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblUserLastName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(btnEditInfo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(btnShowTasks, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -160,7 +166,9 @@ public class UserInfoScreen extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(24)
 							.addComponent(btnEditInfo)
-							.addGap(71)
+							.addGap(18)
+							.addComponent(btnDeleteUser)
+							.addGap(32)
 							.addComponent(btnShowTasks)))
 					.addContainerGap(29, Short.MAX_VALUE))
 		);
@@ -171,6 +179,14 @@ public class UserInfoScreen extends JFrame {
 	//This methods is responsible for creating events
 	//////////////////////////////////////////////////////
 	private void createEvents() {
+		btnDeleteUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserController uc = new UserController();
+				uc.deleteUser(user);
+				System.out.println("User Deleted");
+			}
+		});
+		
 		btnShowTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {

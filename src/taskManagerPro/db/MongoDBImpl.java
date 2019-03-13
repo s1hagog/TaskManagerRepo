@@ -18,6 +18,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 
 import taskManagerPro.entities.Task;
+import taskManagerPro.entities.User;
 
 public class MongoDBImpl extends MongoDB implements DBImplInterface{
 	
@@ -129,11 +130,11 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 
 	public void setTaskStatus(String username, Task t) {
 		// TODO Auto-generated method stub
-		this.dbCloseConnection();
+		this.dbOpenConnection();
 		
 		try {
 			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
-			collection.updateOne(eq("email",username), Updates.set("task.status", t.status));
+			collection.updateOne(Filters.and(eq("email", username), eq("tasks._id", t._id)), Updates.set("tasks.$.status", t.status));
 			
 		} catch(MongoException mx) {
 			System.out.println("Error changing task status");
@@ -141,6 +142,23 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 			System.out.println(mx.getCode());
 			System.out.println(mx.getStackTrace());
 		}
+		
+		this.dbCloseConnection();
+		
+	}
+
+	public void deleteUser(User u) {
+		this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			collection.deleteOne(eq("email", u.email));
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}	
 		
 		this.dbCloseConnection();
 		
