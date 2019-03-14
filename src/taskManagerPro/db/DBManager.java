@@ -25,12 +25,18 @@ public class DBManager {
 		return imp.getTasks(username);
 	}
 	
-	public void setTaskStatus(String username, Task t) {
-		imp.setTaskStatus(username, t);
+	public void setTaskStatus(String username, int id, String status) {
+		imp.setTaskStatus(username, id, status);
 	}
 	
-	public void deleteUser(User u) {
-		imp.deleteUser(u);
+	public void deleteUser(String email) {
+		imp.deleteUser(email);
+	}
+
+	public void createUser(User user) {
+		// TODO Auto-generated method stub
+		imp.createUser(user);
+		
 	}
 
 }

@@ -283,7 +283,7 @@ public class TasksInfoScreen extends JFrame {
 		//Lets create 3 array which will represent different status of tasks
 		
 		for(Task task : tasks) {
-			switch(tc.convertStatusToInteger(task.status)) {
+			switch(task.convertStatusToInteger()) {
 				case 0:
 					tasksToDo.add(task);
 					break;

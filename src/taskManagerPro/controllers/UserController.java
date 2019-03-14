@@ -25,7 +25,14 @@ public class UserController {
 		
 	}
 	
-	public void deleteUser(User u) {
+	public void deleteUser(String email) {
+		dbmgr.deleteUser(email);
+		
+	}
+
+	public void createUser(User user) {
+		// TODO Auto-generated method stub
+		dbmgr.createUser(user);
 		
 	}
 	

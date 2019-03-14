@@ -128,13 +128,13 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		return tasks;
 	}
 
-	public void setTaskStatus(String username, Task t) {
+	public void setTaskStatus(String username, int id, String status) {
 		// TODO Auto-generated method stub
 		this.dbOpenConnection();
 		
 		try {
 			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
-			collection.updateOne(Filters.and(eq("email", username), eq("tasks._id", t._id)), Updates.set("tasks.$.status", t.status));
+			collection.updateOne(Filters.and(eq("email", username), eq("tasks._id", id)), Updates.set("tasks.$.status", status));
 			
 		} catch(MongoException mx) {
 			System.out.println("Error changing task status");
@@ -147,18 +147,46 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		
 	}
 
-	public void deleteUser(User u) {
+	public void deleteUser(String username) {
 		this.dbOpenConnection();
 		
 		try {
 			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
-			collection.deleteOne(eq("email", u.email));
+			collection.deleteOne(eq("email", username));
 		} catch(MongoException mx) {
 			System.out.println("Error changing task status");
 			System.out.println(mx.getMessage());
 			System.out.println(mx.getCode());
 			System.out.println(mx.getStackTrace());
 		}	
+		
+		this.dbCloseConnection();
+		
+	}
+
+	public void createUser(User u) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			Document doc = new Document()
+					.append("first_name", u.first_name)
+					.append("last_name", u.last_name)
+					.append("email", u.email)
+					.append("password", u.password)
+					.append("department", new Document()
+							.append("name", u.dept_name)
+							.append("description", u.dept_desc));
+			collection.insertOne(doc);
+					
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}	
+		
 		
 		this.dbCloseConnection();
 		

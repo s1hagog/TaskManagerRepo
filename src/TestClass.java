@@ -14,7 +14,7 @@ public class TestClass {
 		task.status = "Test it!!!";
 		System.out.println(task.toString());
 		DBManager dbmgr = new DBManager();
-		dbmgr.setTaskStatus("moshakalex@gmail.com", task);
+		//dbmgr.setTaskStatus("moshakalex@gmail.com", task);
 
 	}
 

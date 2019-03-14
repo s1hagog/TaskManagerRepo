@@ -34,6 +34,7 @@ public class UserInfoScreen extends JFrame {
 	private JButton btnShowTasks;
 	private JButton btnEditInfo;
 	private JButton btnDeleteUser;
+	private UserInfoScreen frame = this;
 
 	/**
 	 * Create the frame.
@@ -52,7 +53,7 @@ public class UserInfoScreen extends JFrame {
 	//initializing components
 	//////////////////////////////////////////////////////
 	private void initComponents() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 603, 294);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,6 +97,7 @@ public class UserInfoScreen extends JFrame {
 		
 		btnEditInfo = new JButton("Edit Info");
 		
+		
 		btnShowTasks = new JButton("Show Tasks");
 		
 		btnDeleteUser = new JButton("Delete User");
@@ -110,67 +112,65 @@ public class UserInfoScreen extends JFrame {
 						.addComponent(lblTitle, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblEmail, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblFirstName, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblLastName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblDepartment, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(textAreaUserDeptDescription, 0, 0, Short.MAX_VALUE))
+								.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(lblEmail, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblFirstName, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblLastName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblDepartment, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblUserLastName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblUserFirstName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblUserEmail, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))))
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblUserLastName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUserFirstName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUserEmail, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(btnDeleteUser)
-									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(btnEditInfo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(btnShowTasks, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addGap(18))))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textAreaUserDeptDescription, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnShowTasks, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+										.addComponent(btnEditInfo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addContainerGap())
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addGap(219)
+									.addComponent(btnDeleteUser))))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblTitle)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFirstName)
+						.addComponent(lblUserFirstName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEditInfo))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblLastName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblUserLastName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblFirstName)
-								.addComponent(lblUserFirstName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblLastName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUserLastName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUserEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblDepartment, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textAreaUserDeptDescription, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(24)
-							.addComponent(btnEditInfo)
-							.addGap(18)
-							.addComponent(btnDeleteUser)
-							.addGap(32)
-							.addComponent(btnShowTasks)))
+						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblUserEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDepartment, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnShowTasks))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textAreaUserDeptDescription, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(29, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(216, Short.MAX_VALUE)
+					.addComponent(btnDeleteUser)
+					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -182,7 +182,7 @@ public class UserInfoScreen extends JFrame {
 		btnDeleteUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserController uc = new UserController();
-				uc.deleteUser(user);
+				uc.deleteUser(user.email);
 				System.out.println("User Deleted");
 			}
 		});
@@ -192,14 +192,17 @@ public class UserInfoScreen extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 			        public void run() 
 			        {
-			        	TasksInfoScreen taskInfoScreen  = new TasksInfoScreen(user);
+			        	TasksInfoScreenNewDesign taskInfoScreen  = new TasksInfoScreenNewDesign(user);
 			        	taskInfoScreen.setVisible(true);
-			        	UserInfoScreen frame = new UserInfoScreen(user);
-						frame.setVisible(false);
-						frame.dispose();
-			        	
+			        	frame.dispose();
 			        }
 				});
+				
+			}
+		});
+		
+		btnEditInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
 	}

@@ -7,6 +7,7 @@ public class User {
 	public String last_name;
 	public String dept_name;
 	public String dept_desc;
+	public String password;
 	public Login login;
 	
 	@Override

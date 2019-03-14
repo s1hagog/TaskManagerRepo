@@ -29,6 +29,8 @@ public class MainLoginScreen extends JFrame {
 	private JTextField passwordTxtField;
 	private JLabel lblAttempt;
 	private JButton btnSubmit;
+	private MainLoginScreen frame = this;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -63,7 +65,7 @@ public class MainLoginScreen extends JFrame {
 	//////////////////////////////////////////////////////
 	private void initComponents() {
 		// TODO Auto-generated method stub
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 301);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,6 +86,9 @@ public class MainLoginScreen extends JFrame {
 		
 		
 		lblAttempt = new JLabel("");
+		
+		btnNewButton = new JButton("Create User");
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -103,7 +108,10 @@ public class MainLoginScreen extends JFrame {
 							.addComponent(btnSubmit, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblAttempt, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)))
+							.addComponent(lblAttempt, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -121,7 +129,9 @@ public class MainLoginScreen extends JFrame {
 					.addComponent(btnSubmit)
 					.addGap(18)
 					.addComponent(lblAttempt)
-					.addContainerGap(78, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+					.addComponent(btnNewButton)
+					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 		
@@ -148,15 +158,23 @@ public class MainLoginScreen extends JFrame {
 				        {
 				        	UserInfoScreen userInfoScreen  = new UserInfoScreen(user);
 				        	userInfoScreen.setVisible(true);
-				        	MainLoginScreen frame = new MainLoginScreen();
-							frame.setVisible(false);
-							frame.dispose();
-				        	
 				        }
 					});
+					frame.dispose();
 				}
 				else
 					lblAttempt.setText("Login Unsuccessful");
+			}
+		});
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	CreateUserScreen createUserScreen = new CreateUserScreen();
+			        	createUserScreen.setVisible(true);
+			        }
+				});
 			}
 		});
 		

@@ -26,10 +26,12 @@ public interface DBImplInterface {
 	public List<Task> getTasks(String username);
 	
 	//delete user from db
-	public void deleteUser(User u);
+	public void deleteUser(String email);
 	
 	//set new status for a task
-	public void setTaskStatus(String username, Task t);
+	public void setTaskStatus(String username, int id, String status);
+
+	public void createUser(User user);
 	
 
 }

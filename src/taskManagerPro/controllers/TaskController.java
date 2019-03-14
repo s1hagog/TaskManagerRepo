@@ -13,19 +13,8 @@ public class TaskController {
 		return dbmgr.getTasks(userName);
 	}
 	
-	public int convertStatusToInteger(String status) {
-		if(status.equals("To do"))
-			return 0;
-		else if(status.contentEquals("In progress"))
-			return 1;
-		else if(status.contentEquals("Completed"))
-			return 2;
-		else
-			return 0;
-	}
-	
-	public void setTaskStatus(String username, Task task) {
-		
+	public void setTaskStatus(String username, int id, String status) {
+		dbmgr.setTaskStatus(username, id, status);
 	}
 
 }
