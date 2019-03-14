@@ -45,6 +45,7 @@ public class TasksInfoScreenNewDesign extends JFrame {
 	private ArrayList<Task> tasks;
 	private JList listTaskStatus;
 	private JButton btnUpdateStatus;
+	private JButton btnDeleteTask;
 	
 
 	/**
@@ -105,7 +106,8 @@ public class TasksInfoScreenNewDesign extends JFrame {
 		
 		endDateTextArea = new JTextArea();
 		
-		JButton btnDeleteTask = new JButton("Delete Task");
+		btnDeleteTask = new JButton("Delete Task");
+		
 		
 		JButton btnEditTask = new JButton("Edit Task");
 		
@@ -232,7 +234,17 @@ public class TasksInfoScreenNewDesign extends JFrame {
 				
 				//update the task in the database
 				TaskController tc = new TaskController();
-				tc.setTaskStatus(u.email, task._id, task.status);
+				tc.setTaskStatus(u.email, task.name, task.status);
+			}
+		});
+		btnDeleteTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = listTasks.getSelectedIndex();
+				Task task = tasks.get(index);
+				
+				TaskController tc = new TaskController();
+				tc.deleteTask(u.email, task.name);
+				
 			}
 		});
 		

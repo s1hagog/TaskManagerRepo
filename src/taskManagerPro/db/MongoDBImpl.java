@@ -53,6 +53,10 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 	public void dbCloseConnection() {
 		this.mongoClient.close();	
 	}
+	
+	///////////////////////////
+	//USERS
+	///////////////////////////
 
 	public String getUserPassword(String username) {
 		this.dbOpenConnection();
@@ -98,57 +102,7 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		this.dbCloseConnection();
 		return u;
 	}
-
-
-	public List<Task> getTasks(String username) {
-		this.dbOpenConnection();
-		List<Task> tasks = new ArrayList<Task>();
-		//Task instance to write into array
-		
-		try {
-			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
-			org.bson.Document query = (org.bson.Document) collection.find(eq("email",username)).first();
-			List<Document> tasksData = (List<Document>)query.get("tasks");
-			for(Document taskData : tasksData) {
-				Task tempTask = new Task();
-				tempTask._id = taskData.getInteger("_id");
-				tempTask.name = taskData.getString("name");
-				tempTask.description = taskData.getString("description");
-				tempTask.end_date = taskData.getDate("end_date");
-				tempTask.start_date = taskData.getDate("start_date");
-				tempTask.status = taskData.getString("status");
-				tasks.add(tempTask);
-			}
-			
-		} catch(MongoException mx) {
-			System.out.println("Error getting tasks data");
-			System.out.println(mx.getMessage());
-			System.out.println(mx.getCode());
-			System.out.println(mx.getStackTrace());
-		}
-		this.dbCloseConnection();
-		return tasks;
-	}
-
-	public void setTaskStatus(String username, int id, String status) {
-		// TODO Auto-generated method stub
-		this.dbOpenConnection();
-		
-		try {
-			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
-			collection.updateOne(Filters.and(eq("email", username), eq("tasks._id", id)), Updates.set("tasks.$.status", status));
-			
-		} catch(MongoException mx) {
-			System.out.println("Error changing task status");
-			System.out.println(mx.getMessage());
-			System.out.println(mx.getCode());
-			System.out.println(mx.getStackTrace());
-		}
-		
-		this.dbCloseConnection();
-		
-	}
-
+	
 	public void deleteUser(String username) {
 		this.dbOpenConnection();
 		
@@ -195,7 +149,7 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 	}
 
 	public void updateUser(User u) {
-this.dbOpenConnection();
+		this.dbOpenConnection();
 		
 		try {
 			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
@@ -215,6 +169,78 @@ this.dbOpenConnection();
 			System.out.println(mx.getStackTrace());
 		}	
 		
+		
+		this.dbCloseConnection();
+		
+	}
+	
+	///////////////////////////
+	//TASKS
+	///////////////////////////
+
+
+	public List<Task> getTasks(String username) {
+		this.dbOpenConnection();
+		List<Task> tasks = new ArrayList<Task>();
+		//Task instance to write into array
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			org.bson.Document query = (org.bson.Document) collection.find(eq("email",username)).first();
+			List<Document> tasksData = (List<Document>)query.get("tasks");
+			for(Document taskData : tasksData) {
+				Task tempTask = new Task();
+//				tempTask._id = taskData.getInteger("_id");
+				tempTask.name = taskData.getString("name");
+				tempTask.description = taskData.getString("description");
+				tempTask.end_date = taskData.getDate("end_date");
+				tempTask.start_date = taskData.getDate("start_date");
+				tempTask.status = taskData.getString("status");
+				tasks.add(tempTask);
+			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		this.dbCloseConnection();
+		return tasks;
+	}
+
+	public void setTaskStatus(String username, String name, String status) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			collection.updateOne(Filters.and(eq("email", username), eq("tasks.name", name)), Updates.set("tasks.$.status", status));
+			
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		
+	}
+
+	public void deleteTask(String username, String name) {
+		this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			collection.updateOne(Filters.eq("email", username), Updates.pull("tasks", eq("name", name)));
+			
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
 		
 		this.dbCloseConnection();
 		

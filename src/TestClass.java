@@ -11,11 +11,9 @@ import taskManagerPro.entities.User;
 public class TestClass {
 	
 	public static void main(String[] args) {
-		UserController uc = new UserController();
-		Login l = new Login("easy@mail.com", "12345");
-		User u = uc.getUser(l);
-		System.out.println(u.toString());
-
+		TaskController tc = new TaskController();
+		tc.deleteTask("moshakalex@gmail.com", "123");
+		
 	}
 
 }

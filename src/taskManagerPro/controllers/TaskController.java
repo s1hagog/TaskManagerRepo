@@ -13,8 +13,16 @@ public class TaskController {
 		return dbmgr.getTasks(userName);
 	}
 	
-	public void setTaskStatus(String username, int id, String status) {
-		dbmgr.setTaskStatus(username, id, status);
+	public void setTaskStatus(String username, String name, String status) {
+		dbmgr.setTaskStatus(username, name, status);
 	}
+
+	public void deleteTask(String username, String name) {
+		// TODO Auto-generated method stub
+		dbmgr.deleteTask(username, name);
+		
+	}
+	
+	
 
 }

@@ -20,8 +20,8 @@ public class DBManager {
 		return imp.getTasks(username);
 	}
 	
-	public void setTaskStatus(String username, int id, String status) {
-		imp.setTaskStatus(username, id, status);
+	public void setTaskStatus(String username, String name, String status) {
+		imp.setTaskStatus(username, name, status);
 	}
 	
 	public void deleteUser(String email) {
@@ -43,6 +43,12 @@ public class DBManager {
 	public User getUser(String userLogin) {
 		// TODO Auto-generated method stub
 		return imp.getUser(userLogin);
+		
+	}
+
+	public void deleteTask(String username, String name) {
+		// TODO Auto-generated method stub
+		imp.deleteTask(username, name);
 		
 	}
 
