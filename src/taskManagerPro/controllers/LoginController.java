@@ -23,7 +23,7 @@ public class LoginController {
 	
 	private boolean validatePassword(String password) {
 		//compare the passwords from DB and in a userLogin
-		if(userDBPassword.equals(password))
+		if(userDBPassword!= null && userDBPassword.equals(password))
 			return true;
 		else
 			return false;

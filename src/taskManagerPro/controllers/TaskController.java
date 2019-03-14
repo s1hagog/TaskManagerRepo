@@ -22,6 +22,12 @@ public class TaskController {
 		dbmgr.deleteTask(username, name);
 		
 	}
+
+	public void createTask(String username, Task task) {
+		// TODO Auto-generated method stub
+		dbmgr.createTask(username, task);
+		
+	}
 	
 	
 

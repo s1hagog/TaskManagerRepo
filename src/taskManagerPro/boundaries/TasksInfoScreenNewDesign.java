@@ -42,10 +42,12 @@ public class TasksInfoScreenNewDesign extends JFrame {
 	
 	
 	private User u;
+	private TasksInfoScreenNewDesign frame = this;
 	private ArrayList<Task> tasks;
 	private JList listTaskStatus;
 	private JButton btnUpdateStatus;
 	private JButton btnDeleteTask;
+	private JButton btnAddTask;
 	
 
 	/**
@@ -109,7 +111,8 @@ public class TasksInfoScreenNewDesign extends JFrame {
 		btnDeleteTask = new JButton("Delete Task");
 		
 		
-		JButton btnEditTask = new JButton("Edit Task");
+		btnAddTask = new JButton("Add New Task");
+		
 		
 		listTaskStatus = new JList();
 		listTaskStatus.setVisibleRowCount(3);
@@ -158,7 +161,7 @@ public class TasksInfoScreenNewDesign extends JFrame {
 										.addComponent(endDateTextArea, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
 										.addComponent(startDateTextArea, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(btnEditTask)
+									.addComponent(btnAddTask)
 									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(btnDeleteTask)))
 							.addGap(84))
@@ -192,7 +195,7 @@ public class TasksInfoScreenNewDesign extends JFrame {
 							.addGap(45)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnDeleteTask)
-								.addComponent(btnEditTask)))
+								.addComponent(btnAddTask)))
 						.addComponent(listTasks, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -245,6 +248,19 @@ public class TasksInfoScreenNewDesign extends JFrame {
 				TaskController tc = new TaskController();
 				tc.deleteTask(u.email, task.name);
 				
+			}
+		});
+		btnAddTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//invoke new screen
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	CreateNewTask createNewTask = new CreateNewTask(u);
+			        	createNewTask.setVisible(true);
+			        	frame.dispose();
+			        }
+				});
 			}
 		});
 		

@@ -246,6 +246,30 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		
 	}
 
+	public void createTask(String username, Task task) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			Document doc = new Document("name", task.name)
+					.append("description", task.description)
+					.append("status", "To do")
+					.append("start_date", task.start_date)
+					.append("end_date", task.end_date);
+			collection.updateOne(Filters.eq("email", username), Updates.push("tasks", doc));
+			
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		
+	}
+
 
 	
 	

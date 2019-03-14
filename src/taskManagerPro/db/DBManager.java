@@ -52,4 +52,10 @@ public class DBManager {
 		
 	}
 
+	public void createTask(String username, Task task) {
+		// TODO Auto-generated method stub
+		imp.createTask(username, task);
+		
+	}
+
 }

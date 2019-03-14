@@ -42,6 +42,9 @@ public interface DBImplInterface {
 
 	//delete task from the db
 	public void deleteTask(String username, String name);
+
+	//put new task in the db
+	public void createTask(String username, Task task);
 	
 
 }
