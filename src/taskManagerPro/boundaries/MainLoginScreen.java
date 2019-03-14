@@ -150,9 +150,8 @@ public class MainLoginScreen extends JFrame {
 				LoginController lc = new LoginController();
 				if(lc.isValid(l)) {
 					lblAttempt.setText("Login Successful");
-					final User user = new User();
 					UserController uc = new UserController();
-					uc.setUser(user, l);
+					final User user = uc.getUser(l);
 					EventQueue.invokeLater(new Runnable() {
 				        public void run() 
 				        {

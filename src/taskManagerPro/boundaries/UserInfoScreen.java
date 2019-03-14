@@ -53,7 +53,7 @@ public class UserInfoScreen extends JFrame {
 	//initializing components
 	//////////////////////////////////////////////////////
 	private void initComponents() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 603, 294);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -111,12 +111,9 @@ public class UserInfoScreen extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblTitle, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textAreaUserDeptDescription, 0, 0, Short.MAX_VALUE))
-								.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 										.addComponent(lblEmail, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(lblFirstName, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -127,20 +124,18 @@ public class UserInfoScreen extends JFrame {
 										.addComponent(lblUserLastName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
 										.addComponent(lblUserFirstName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
 										.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblUserEmail, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))))
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnShowTasks, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-										.addComponent(btnEditInfo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addContainerGap())
-								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-									.addGap(219)
-									.addComponent(btnDeleteUser))))))
+										.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+											.addComponent(textAreaUserDeptDescription, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+											.addComponent(lblUserEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)))))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnEditInfo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+								.addComponent(btnShowTasks, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+								.addComponent(btnDeleteUser))
+							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblTitle)
@@ -162,15 +157,17 @@ public class UserInfoScreen extends JFrame {
 						.addComponent(lblDepartment, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblUserDepartment, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnShowTasks))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textAreaUserDeptDescription, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(29, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(216, Short.MAX_VALUE)
-					.addComponent(btnDeleteUser)
-					.addContainerGap())
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textAreaUserDeptDescription, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap(17, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnDeleteUser)
+							.addGap(32))))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -183,7 +180,14 @@ public class UserInfoScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				UserController uc = new UserController();
 				uc.deleteUser(user.email);
-				System.out.println("User Deleted");
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	MainLoginScreen mainLoginScreen  = new MainLoginScreen();
+			        	mainLoginScreen.setVisible(true);
+			        	frame.dispose();
+			        }
+				});
 			}
 		});
 		
@@ -203,6 +207,14 @@ public class UserInfoScreen extends JFrame {
 		
 		btnEditInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	EditUserScreen editUserScreen = new EditUserScreen(user);
+			        	editUserScreen.setVisible(true);
+			        	frame.dispose();
+			        }
+				});
 			}
 		});
 	}

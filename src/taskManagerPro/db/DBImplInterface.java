@@ -17,10 +17,6 @@ public interface DBImplInterface {
 	//get password for login
 	public String getUserPassword(String username);
 	
-	//set user information from login
-	//At first was supposed to be ArrayList but key-value Map is better
-	public Map<String, String> getUserData(String username);
-	
 	//get tasks for user using login
 	//this one return list of tasks without any Maps;
 	public List<Task> getTasks(String username);
@@ -31,7 +27,13 @@ public interface DBImplInterface {
 	//set new status for a task
 	public void setTaskStatus(String username, int id, String status);
 
+	//create new user in db
 	public void createUser(User user);
+
+	//update user info in db
+	public void updateUser(User user);
+
+	public User getUser(String userLogin);
 	
 
 }

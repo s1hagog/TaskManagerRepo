@@ -15,11 +15,6 @@ public class DBManager {
 		return imp.getUserPassword(username);
 	}
 	
-	public Map<String, String> getUserData(String username){
-		
-		return imp.getUserData(username);
-	}
-	
 	public List<Task> getTasks(String username){
 		
 		return imp.getTasks(username);
@@ -36,6 +31,18 @@ public class DBManager {
 	public void createUser(User user) {
 		// TODO Auto-generated method stub
 		imp.createUser(user);
+		
+	}
+
+	public void updateUser(User user) {
+		// TODO Auto-generated method stub
+		imp.updateUser(user);
+		
+	}
+
+	public User getUser(String userLogin) {
+		// TODO Auto-generated method stub
+		return imp.getUser(userLogin);
 		
 	}
 

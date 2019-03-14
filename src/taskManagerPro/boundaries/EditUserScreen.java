@@ -26,7 +26,7 @@ public class EditUserScreen extends JFrame {
 	private EditUserScreen frame = this;
 	private User user;
 	
-	private JButton btnNewButton;
+	private JButton btnUpdateUser;
 	private JTextField textFirstName;
 	private JTextField textLastName;
 	private JTextField textEmail;
@@ -52,9 +52,9 @@ public class EditUserScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		btnNewButton = new JButton("Create User");
+		btnUpdateUser = new JButton("Update User");
 		
-		JLabel lblNewLabel = new JLabel("PLEASE FILL THE FORM");
+		JLabel lblNewLabel = new JLabel("Update " +  user.first_name + "'s Info");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -68,24 +68,24 @@ public class EditUserScreen extends JFrame {
 		
 		JLabel lblDepartment = new JLabel("Department:");
 		
-		textFirstName = new JTextField();
+		textFirstName = new JTextField(user.first_name);
 		textFirstName.setColumns(10);
 		
-		textLastName = new JTextField();
+		textLastName = new JTextField(user.last_name);
 		textLastName.setColumns(10);
 		
-		textEmail = new JTextField();
+		textEmail = new JTextField(user.email);
 		textEmail.setColumns(10);
 		
-		textPassword = new JTextField();
+		textPassword = new JTextField(user.password);
 		textPassword.setColumns(10);
 		
-		textDepartment = new JTextField();
+		textDepartment = new JTextField(user.dept_name);
 		textDepartment.setColumns(10);
 		
 		JLabel lblDepartmentDescription = new JLabel("Department Description:");
 		
-		textDepartmentDescription = new JTextArea();
+		textDepartmentDescription = new JTextArea(user.dept_desc);
 		textDepartmentDescription.setWrapStyleWord(true);
 		textDepartmentDescription.setLineWrap(true);
 		
@@ -119,7 +119,7 @@ public class EditUserScreen extends JFrame {
 							.addContainerGap())))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(140)
-					.addComponent(btnNewButton)
+					.addComponent(btnUpdateUser)
 					.addContainerGap(144, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -152,20 +152,17 @@ public class EditUserScreen extends JFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(textDepartmentDescription, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-					.addComponent(btnNewButton)
+					.addComponent(btnUpdateUser)
 					.addGap(23))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
 	
 	private void createEvents() {
-		btnNewButton.addActionListener(new ActionListener() {
+		btnUpdateUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//create new user  object
-				User user = new User();
-				
-				//set the values
+				//set the values to the current user
 				user.first_name = textFirstName.getText();
 				user.last_name = textLastName.getText();
 				user.email = textEmail.getText();
@@ -173,9 +170,18 @@ public class EditUserScreen extends JFrame {
 				user.dept_name = textDepartment.getText();
 				user.dept_desc = textDepartmentDescription.getText();
 				
-				//use controller to save it in db
+				//use controller to update it in db
 				UserController uc = new UserController();
-				uc.createUser(user);
+				uc.updateUser(user);
+				
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	UserInfoScreen userInfoScreen = new UserInfoScreen(user);
+			        	userInfoScreen.setVisible(true);
+			        	frame.dispose();
+			        }
+				});
 			}
 		});
 	}

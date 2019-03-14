@@ -74,19 +74,20 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		return userpass;
 	}
 
-	public Map<String, String> getUserData(String username) {
+	public User getUser(String userLogin) {
 		this.dbOpenConnection();
-		Map<String, String> userMap = new HashMap<String, String>();
+		User u = new User();
 		
 		try {
 			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
-			org.bson.Document query = (org.bson.Document) collection.find(eq("email",username)).first();
+			org.bson.Document query = (org.bson.Document) collection.find(eq("email", userLogin)).first();
 			org.bson.Document department = (org.bson.Document)query.get("department");
-			userMap.put("first_name", query.getString("first_name"));
-			userMap.put("last_name", query.getString("last_name"));
-			userMap.put("email", query.getString("email"));
-			userMap.put("dept_name", department.getString("name"));
-			userMap.put("dept_desc", department.getString("description"));
+			u.first_name = query.getString("first_name");
+			u.last_name = query.getString("last_name");
+			u.email = query.getString("email");
+			u.password = query.getString("password");
+			u.dept_name = department.getString("name");
+			u.dept_desc = department.getString("description");
 			
 		} catch(MongoException mx) {
 			System.out.println("Error getting user data");
@@ -95,8 +96,9 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 			System.out.println(mx.getStackTrace());
 		}
 		this.dbCloseConnection();
-		return userMap;
+		return u;
 	}
+
 
 	public List<Task> getTasks(String username) {
 		this.dbOpenConnection();
@@ -191,6 +193,34 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		this.dbCloseConnection();
 		
 	}
+
+	public void updateUser(User u) {
+this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			Document update = new Document("$set", new Document()
+					.append("first_name", u.first_name)
+					.append("last_name", u.last_name)
+					.append("email", u.email)
+					.append("password", u.password)
+					.append("department.name", u.dept_name)
+					.append("department.description", u.dept_desc));
+			collection.updateOne(eq("email", u.email), update);
+					
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}	
+		
+		
+		this.dbCloseConnection();
+		
+	}
+
+
 	
 	
 	
