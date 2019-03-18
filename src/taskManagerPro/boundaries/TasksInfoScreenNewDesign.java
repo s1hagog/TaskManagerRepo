@@ -1,6 +1,8 @@
 package taskManagerPro.boundaries;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,6 +19,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -88,6 +91,7 @@ public class TasksInfoScreenNewDesign extends JFrame {
 			}
 		});
 		listTasks.setSelectedIndex(0);
+		listTasks.setCellRenderer(new TasksStatusCellRenderer());
 		
 		JLabel lblToDo = new JLabel("TASKS LIST");
 		lblToDo.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -281,5 +285,23 @@ public class TasksInfoScreenNewDesign extends JFrame {
 		startDateTextArea.setText(task.start_date.toString());
 		endDateTextArea.setText(task.end_date.toString());
 		listTaskStatus.setSelectedIndex(task.convertStatusToInteger());
+	}
+	
+	private class TasksStatusCellRenderer extends DefaultListCellRenderer{
+		public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) { 
+            Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus ); 
+            Task t = (Task) value;
+            switch(t.convertStatusToInteger()) {
+            case 0:
+            	c.setBackground(Color.red);
+            	break;
+            case 1:
+            	c.setBackground(Color.yellow);
+            	break;
+            case 2:
+            	c.setBackground(Color.green);
+            }
+            return c;  
+        }  
 	}
 }
