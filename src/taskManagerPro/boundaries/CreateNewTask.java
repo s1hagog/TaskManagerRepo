@@ -164,7 +164,7 @@ public class CreateNewTask extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 			        public void run() 
 			        {
-			        	TasksInfoScreenNewDesign tasksInfoScreen = new TasksInfoScreenNewDesign(u);
+			        	TasksInfoScreenNewDesign tasksInfoScreen = new TasksInfoScreenNewDesign(user);
 			        	tasksInfoScreen.setVisible(true);
 			        	frame.dispose();
 			        }
