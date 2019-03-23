@@ -3,6 +3,7 @@ package taskManagerPro.db;
 import java.util.List;
 import java.util.Map;
 
+import taskManagerPro.entities.Project;
 import taskManagerPro.entities.Task;
 import taskManagerPro.entities.User;
 
@@ -45,6 +46,11 @@ public interface DBImplInterface {
 
 	//put new task in the db
 	public void createTask(String username, Task task);
+
+	public List<User> getUsersFromProject(String projectName);
+
+	public List<Project> getProjects(String userName);
+
 	
 
 }

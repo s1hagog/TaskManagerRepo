@@ -106,6 +106,7 @@ public class UserInfoScreen extends JFrame {
 		btnNewButton = new JButton("Show Projects");
 		
 		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -220,6 +221,18 @@ public class UserInfoScreen extends JFrame {
 			        {
 			        	EditUserScreen editUserScreen = new EditUserScreen(user);
 			        	editUserScreen.setVisible(true);
+			        	frame.dispose();
+			        }
+				});
+			}
+		});
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	ProjectInfoScreen projectScreen = new ProjectInfoScreen(user);
+			        	projectScreen.setVisible(true);
 			        	frame.dispose();
 			        }
 				});

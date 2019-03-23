@@ -10,6 +10,7 @@ import java.util.Map;
 import org.bson.Document;
 
 import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -17,6 +18,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters; 
 import com.mongodb.client.model.Updates;
 
+import taskManagerPro.entities.Project;
 import taskManagerPro.entities.Task;
 import taskManagerPro.entities.User;
 
@@ -268,6 +270,74 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		
 		this.dbCloseConnection();
 		
+	}
+
+	public List<User> getUsersFromProject(String projectName) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		List<User> users = new ArrayList<User>();
+		//Task instance to write into array
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			FindIterable<Document> query = (FindIterable<Document>) collection.find(eq("project.name", projectName));
+		
+			for(Document doc : query) {
+				org.bson.Document department = (org.bson.Document)doc.get("department");
+				System.out.print(department);
+				User tempUser = new User();
+				tempUser.first_name = doc.getString("first_name");
+				tempUser.last_name = doc.getString("last_name");
+				tempUser.email = doc.getString("email");
+				tempUser.password = doc.getString("password");
+				if(department != null) {
+					tempUser.dept_name = department.getString("name");
+					tempUser.dept_desc = department.getString("description");
+				}else {
+					tempUser.dept_name = "no department";
+					tempUser.dept_desc = "no department";
+				}
+				users.add(tempUser);
+			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting user data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		this.dbCloseConnection();
+		return users;
+
+	}
+
+	public List<Project> getProjects(String userName) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		List<Project> projects = new ArrayList<Project>();
+		//Task instance to write into array
+		
+		try {	
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			org.bson.Document query = (org.bson.Document) collection.find(eq("email",userName)).first();
+			List<Document> projts = (List<Document>)query.get("project");
+			for(Document proj : projts) {
+				Project tempProject = new Project();
+				tempProject.name = proj.getString("name");
+				tempProject.description = proj.getString("description");
+				//tempProject.phase = proj.getString("status");
+				projects.add(tempProject);
+			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		this.dbCloseConnection();
+		return projects;
+
 	}
 
 

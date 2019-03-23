@@ -3,6 +3,7 @@ package taskManagerPro.db;
 import java.util.List;
 import java.util.Map;
 
+import taskManagerPro.entities.Project;
 import taskManagerPro.entities.Task;
 import taskManagerPro.entities.User;
 
@@ -56,6 +57,16 @@ public class DBManager {
 		// TODO Auto-generated method stub
 		imp.createTask(username, task);
 		
+	}
+
+	public List<User> getUsersFromProject(String projectName) {
+		// TODO Auto-generated method stub
+		return imp.getUsersFromProject(projectName);
+	}
+
+	public List<Project> getProjects(String userName) {
+		// TODO Auto-generated method stub
+		return imp.getProjects(userName);
 	}
 
 }
