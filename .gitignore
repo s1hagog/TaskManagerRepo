@@ -1,7 +1,10 @@
-
 .metadata
 bin/
 tmp/
+target
+target/
+target/classes
+target/classes/
 *.tmp
 *.bak
 *.swp
@@ -10,7 +13,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-target
+
 
 
 # External tool builders
