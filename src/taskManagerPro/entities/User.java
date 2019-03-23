@@ -9,11 +9,12 @@ public class User {
 	public String dept_desc;
 	public String password;
 	public Login login;
+	public boolean isManager;
 	
 	@Override
 	public String toString() {
 		return "User [email=" + email + ", first_name=" + first_name + ", last_name=" + last_name + ", dept_name="
-				+ dept_name + ", dept_desc=" + dept_desc + "]";
+				+ dept_name + ", dept_desc=" + dept_desc + ", isManager=" + isManager + "]";
 	}
 	
 	

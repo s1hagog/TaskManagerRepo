@@ -94,6 +94,10 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 			u.password = query.getString("password");
 			u.dept_name = department.getString("name");
 			u.dept_desc = department.getString("description");
+			if(query.getBoolean("manager") != null) {
+				u.isManager = true;
+			} else
+				u.isManager = false;
 			
 		} catch(MongoException mx) {
 			System.out.println("Error getting user data");

@@ -152,13 +152,23 @@ public class MainLoginScreen extends JFrame {
 					lblAttempt.setText("Login Successful");
 					UserController uc = new UserController();
 					final User user = uc.getUser(l);
-					EventQueue.invokeLater(new Runnable() {
-				        public void run() 
-				        {
-				        	UserInfoScreen userInfoScreen  = new UserInfoScreen(user);
-				        	userInfoScreen.setVisible(true);
-				        }
-					});
+					if(!user.isManager) {
+						EventQueue.invokeLater(new Runnable() {
+					        public void run() 
+					        {
+					        	UserInfoScreen userInfoScreen  = new UserInfoScreen(user);
+					        	userInfoScreen.setVisible(true);
+					        }
+						});
+					} else {
+						EventQueue.invokeLater(new Runnable() {
+					        public void run() 
+					        {
+					        	ManagerInfoScreen managerInfoScreen  = new ManagerInfoScreen(user);
+					        	ManagerInfoScreen.setVisible(true);
+					        }
+						});
+					}
 					frame.dispose();
 				}
 				else
