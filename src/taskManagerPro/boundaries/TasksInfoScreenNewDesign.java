@@ -276,7 +276,8 @@ public class TasksInfoScreenNewDesign extends JFrame {
 		TaskController tc = new TaskController();
 		System.out.println("User email: " + u);
 		tasks = (ArrayList<Task>)tc.getTasks(u.email);
-		//now lets put the created lists into the JLists	
+		//now lets put the created lists into the JLists
+		System.out.print(tasks);
 		listTasks.setListData(tasks.toArray());
 	}
 	

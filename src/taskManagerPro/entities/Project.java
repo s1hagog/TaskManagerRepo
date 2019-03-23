@@ -7,9 +7,9 @@ public class Project {
 	public String name;
 	public String description;
 	public String phase;
-	public String projectOwner;
-	public Date start_date;
-	public Date end_date;
+	//public String projectOwner;
+	//public Date start_date;
+	//public Date end_date;
 
 	
 	public int convertStatusToInteger() {
