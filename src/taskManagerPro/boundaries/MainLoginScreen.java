@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import taskManagerPro.controllers.LoginController;
 import taskManagerPro.controllers.UserController;
 import taskManagerPro.entities.Login;
+import taskManagerPro.entities.Manager;
 import taskManagerPro.entities.User;
 
 import javax.swing.JRadioButton;
@@ -164,8 +165,15 @@ public class MainLoginScreen extends JFrame {
 						EventQueue.invokeLater(new Runnable() {
 					        public void run() 
 					        {
-					        	ManagerInfoScreen managerInfoScreen  = new ManagerInfoScreen(user);
-					        	ManagerInfoScreen.setVisible(true);
+					        	Manager manager = new Manager();
+					        	manager.first_name = user.first_name;
+					    		manager.last_name = user.last_name;
+					    		manager.email = user.email;
+					    		manager.isManager = user.isManager;
+					    		manager.dept_name = user.dept_name;
+					    		manager.dept_desc = user.dept_desc;
+					        	ManagerInfoScreen managerInfoScreen  = new ManagerInfoScreen(manager);
+					        	managerInfoScreen.setVisible(true);
 					        }
 						});
 					}

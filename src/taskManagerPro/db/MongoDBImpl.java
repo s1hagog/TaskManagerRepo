@@ -18,6 +18,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters; 
 import com.mongodb.client.model.Updates;
 
+import taskManagerPro.entities.Manager;
 import taskManagerPro.entities.Project;
 import taskManagerPro.entities.Task;
 import taskManagerPro.entities.User;
@@ -343,6 +344,238 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		return projects;
 
 	}
+
+	public List<User> getAllUsers(Manager m) {
+		// TODO Auto-generated method stub
+		List<User> allUsers = new ArrayList<User>();
+		this.dbOpenConnection();
+		
+		try {	
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			FindIterable<Document> query = (FindIterable<Document>) collection.find(eq("manager", null));
+			for(Document doc : query) {
+				org.bson.Document department = (org.bson.Document)doc.get("department");
+				System.out.println(department);
+				User tempUser = new User();
+				tempUser.first_name = doc.getString("first_name");
+				tempUser.last_name = doc.getString("last_name");
+				tempUser.email = doc.getString("email");
+				tempUser.password = doc.getString("password");
+				if(department != null) {
+					tempUser.dept_name = department.getString("name");
+					tempUser.dept_desc = department.getString("description");
+				}else {
+					tempUser.dept_name = "no department";
+					tempUser.dept_desc = "no department";
+				}
+				allUsers.add(tempUser);
+			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		return allUsers;
+	}
+
+	public List<Project> getAllProjects(Manager m) {
+		// TODO Auto-generated method stub
+		List<Project> allProjects = new ArrayList<Project>();
+		this.dbOpenConnection();
+		
+		try {	
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			FindIterable<Document> query = (FindIterable<Document>) collection.find(eq("manager", true));
+			
+			for(Document doc : query) {
+				List<Document> projects = (List<Document>)doc.get("project");
+				for (Document project: projects) {
+					System.out.println(project.getString("name"));
+					Project tempProject = new Project();
+					tempProject.name = project.getString("name");
+					allProjects.add(tempProject);
+				}
+			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		return allProjects;
+	}
+
+	public void assignUserToProject(User u, Project p) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			Document doc = new Document("name", p.name)
+					.append("description", p.description)
+					.append("phase", p.phase);
+			collection.updateOne(Filters.eq("email", u.email), Updates.push("project", doc));
+			
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+	}
+
+	public void assignTaskToUser(User u, Task t) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		
+		try {	
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			Document doc = new Document("name", t.name)
+					.append("description", t.description)
+					.append("status", "To do")
+					.append("start_date", t.start_date)
+					.append("end_date", t.end_date);
+			collection.updateOne(Filters.eq("email", u.email), Updates.push("tasks", doc));
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+	}
+
+	
+	//NEVER USED//
+	public void addTaskToProject(Task t, Project p) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		
+		try {	
+			
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+	}
+
+	public List<Task> getTasks(String m_username, Project p) {
+		// TODO Auto-generated method stub
+		List<Task> tasks = new ArrayList<Task>();
+		this.dbOpenConnection();
+		
+		try {	
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			org.bson.Document query = (org.bson.Document) collection.find(eq("email",m_username)).first();
+			List<Document> projects = (List<Document>)query.get("project");
+			for(Document project: projects) {
+				if(project.getString("name").equals(p.name)) {
+					List<Document> _tasks = (List<Document>)project.get("tasks");
+					for(Document task: _tasks) {
+						Task tempTask = new Task();
+						tempTask.name = task.getString("name");
+						tempTask.description = task.getString("description");
+						tempTask.end_date = task.getDate("end_date");
+						tempTask.start_date = task.getDate("start_date");
+						tempTask.status = task.getString("status");
+						tasks.add(tempTask);
+					}
+				}
+			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		return tasks;
+	}
+
+	public void createTask(Manager m, Project p, Task task) {
+		// TODO Auto-generated method stub
+		this.dbOpenConnection();
+		
+		try {	
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			Document doc = new Document("name", task.name)
+					.append("description", task.description)
+					.append("status", "To do")
+					.append("start_date", task.start_date)
+					.append("end_date", task.end_date);
+			collection.updateOne(Filters.and(eq("email", m.email), eq("project.name", p.name)), Updates.push("project.$.tasks", doc));
+			
+		} catch(MongoException mx) {
+			System.out.println("Error getting tasks data");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		
+	}
+
+	public void unassignProject(String email, String name) {
+		this.dbOpenConnection();
+		
+		try {
+			
+			//First unassign the project
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			collection.updateOne(Filters.eq("email", email), Updates.pull("project", eq("name", name)));
+			
+			//Find all task names related to the project
+			List<String> t_names = new ArrayList<String>();
+			org.bson.Document query = (org.bson.Document) collection.find(eq("manager",true)).first();
+			List<Document> projects = (List<Document>)query.get("project");
+			for(Document project: projects) {
+				if(project.getString("name").equals(name)) {
+					List<Document> _tasks = (List<Document>)project.get("tasks");
+					for(Document task: _tasks) {
+						String s;
+						s = task.getString("name");
+						t_names.add(s);
+					}
+				}
+			}
+			
+			//unassign those tasks aswell
+			
+			for (String t_name: t_names) {
+				collection.updateOne(Filters.eq("email", email), Updates.pull("tasks", eq("name", t_name)));
+			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		
+	}
+
 
 
 	

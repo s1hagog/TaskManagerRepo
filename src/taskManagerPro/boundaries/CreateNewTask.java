@@ -12,6 +12,8 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import taskManagerPro.controllers.TaskController;
 import taskManagerPro.controllers.UserController;
+import taskManagerPro.entities.Manager;
+import taskManagerPro.entities.Project;
 import taskManagerPro.entities.Task;
 import taskManagerPro.entities.User;
 
@@ -36,18 +38,21 @@ import javax.swing.JTextArea;
 public class CreateNewTask extends JFrame {
 	
 	private User user;
+	private Manager m;
 	private CreateNewTask frame = this;
-	
+	private Project p;
 	private JButton btnCreateTask;
 	private JTextField textTaskName;
 	private JTextField textDueDate;
 	private JDatePickerImpl datePicker;
 	private JTextArea textTaskDescription;
-	private User u;
+	private JLabel lblNewLabel;
+	private JButton btnAddTask;
 	
 
 	/**
 	 * Create the frame.
+	 * @wbp.parser.constructor
 	 */
 	
 	
@@ -55,6 +60,17 @@ public class CreateNewTask extends JFrame {
 		this.user = u;
 		setTitle("Add New Task - TaskManagerPRO");
 		initComponents();
+		btnAddTask.setVisible(false);
+		createEvents();
+	}
+	
+	public CreateNewTask(Project p, Manager m) {
+		this.m = m;
+		this.p = p;
+		setTitle("Add New Tasks (Manager) - TaskManagerPro");
+		initComponents();
+		lblNewLabel.setText("Adding Task For " + p.name + " Project" );
+		btnCreateTask.setVisible(false);
 		createEvents();
 	}
 	
@@ -67,7 +83,7 @@ public class CreateNewTask extends JFrame {
 		
 		btnCreateTask = new JButton("Create Task");
 		
-		JLabel lblNewLabel = new JLabel("PLEASE FILL THE FORM");
+		lblNewLabel = new JLabel("PLEASE FILL THE FORM");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -90,6 +106,9 @@ public class CreateNewTask extends JFrame {
 		textTaskDescription = new JTextArea();
 		textTaskDescription.setWrapStyleWord(true);
 		textTaskDescription.setLineWrap(true);
+		
+		btnAddTask = new JButton("Add Task");
+		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -118,7 +137,9 @@ public class CreateNewTask extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(136)
 					.addComponent(btnCreateTask)
-					.addContainerGap(148, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+					.addComponent(btnAddTask)
+					.addGap(22))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -138,8 +159,10 @@ public class CreateNewTask extends JFrame {
 					.addGap(18)
 					.addComponent(textTaskDescription, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(btnCreateTask)
-					.addContainerGap(138, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCreateTask)
+						.addComponent(btnAddTask))
+					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -166,6 +189,32 @@ public class CreateNewTask extends JFrame {
 			        {
 			        	TasksInfoScreenNewDesign tasksInfoScreen = new TasksInfoScreenNewDesign(user);
 			        	tasksInfoScreen.setVisible(true);
+			        	frame.dispose();
+			        }
+				});
+			}
+		});
+		
+		btnAddTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//create new task object
+				Task task = new Task();
+				
+				//set the values
+				task.name = textTaskName.getText();
+				task.end_date = retrieveDate();
+				task.start_date = new Date();
+				task.description = textTaskDescription.getText();
+				//send the new object to db
+				
+				TaskController tc = new TaskController();
+				tc.createTask(m, p, task);
+				
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	ManagerInfoScreen managerInfoScreen = new ManagerInfoScreen(m);
+			        	managerInfoScreen.setVisible(true);
 			        	frame.dispose();
 			        }
 				});

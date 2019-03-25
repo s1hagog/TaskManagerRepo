@@ -3,6 +3,7 @@ package taskManagerPro.db;
 import java.util.List;
 import java.util.Map;
 
+import taskManagerPro.entities.Manager;
 import taskManagerPro.entities.Project;
 import taskManagerPro.entities.Task;
 import taskManagerPro.entities.User;
@@ -47,9 +48,43 @@ public interface DBImplInterface {
 	//put new task in the db
 	public void createTask(String username, Task task);
 
+	
+	////////////////////////////////////////////////////////////////
+	
+	//get all users that are in the same project
 	public List<User> getUsersFromProject(String projectName);
-
+	
+	//gets projects in which user takes part
 	public List<Project> getProjects(String userName);
+
+	
+	//////////////////////////////////////////////////////////////////
+	
+	//Manager Functions
+	
+	
+	//get all users in db
+	public List<User> getAllUsers(Manager m);
+
+	//get all projects in db
+	public List<Project> getAllProjects(Manager m);
+
+	//assign user to project
+	public void assignUserToProject(User u, Project p);
+
+	//assign task to user
+	public void assignTaskToUser(User u, Task t);
+	
+	//add new task to the project
+	public void addTaskToProject(Task t, Project p);
+
+	//get tasks based on project
+	public List<Task> getTasks(String m_username, Project p);
+
+	//create task into a project
+	public void createTask(Manager m, Project p, Task task);
+
+	public void unassignProject(String email, String name);
 
 	
 

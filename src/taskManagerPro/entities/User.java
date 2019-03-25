@@ -13,8 +13,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", first_name=" + first_name + ", last_name=" + last_name + ", dept_name="
-				+ dept_name + ", dept_desc=" + dept_desc + ", isManager=" + isManager + "]";
+		return this.first_name + " " + this.last_name; 
 	}
 	
 	
