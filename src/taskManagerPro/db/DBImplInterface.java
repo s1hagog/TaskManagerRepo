@@ -84,7 +84,11 @@ public interface DBImplInterface {
 	//create task into a project
 	public void createTask(Manager m, Project p, Task task);
 
+	//unassign project from user
 	public void unassignProject(String email, String name);
+
+	//add new project in a project list
+	public void createProject(String email, Project p);
 
 	
 

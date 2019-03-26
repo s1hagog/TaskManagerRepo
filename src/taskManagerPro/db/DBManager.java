@@ -112,5 +112,10 @@ public class DBManager {
 		
 	}
 
+	public void createProject(String email, Project p) {
+		imp.createProject(email, p);
+		
+	}
+
 
 }

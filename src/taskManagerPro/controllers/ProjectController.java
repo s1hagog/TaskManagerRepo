@@ -17,4 +17,9 @@ public class ProjectController {
 	public List<Project> getProjects(String userName){
 		return dbmanager.getProjects(userName);
 	}
+
+	public void createProject(String email, Project p) {
+		dbmanager.createProject(email, p);
+		
+	}
 }

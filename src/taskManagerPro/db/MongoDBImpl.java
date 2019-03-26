@@ -276,6 +276,10 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		this.dbCloseConnection();
 		
 	}
+	
+	/////////////////////
+	//PROJECTS
+	////////////////////
 
 	public List<User> getUsersFromProject(String projectName) {
 		// TODO Auto-generated method stub
@@ -564,6 +568,29 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 			for (String t_name: t_names) {
 				collection.updateOne(Filters.eq("email", email), Updates.pull("tasks", eq("name", t_name)));
 			}
+			
+		} catch(MongoException mx) {
+			System.out.println("Error changing task status");
+			System.out.println(mx.getMessage());
+			System.out.println(mx.getCode());
+			System.out.println(mx.getStackTrace());
+		}
+		
+		this.dbCloseConnection();
+		
+	}
+
+	
+	public void createProject(String email, Project p) {
+		// TODO Auto-generated method stub
+this.dbOpenConnection();
+		
+		try {
+			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
+			Document doc = new Document("name", p.name)
+					.append("description", p.description)
+					.append("phase", "Iteration 1");
+			collection.updateOne(Filters.eq("email", email), Updates.push("project", doc));
 			
 		} catch(MongoException mx) {
 			System.out.println("Error changing task status");

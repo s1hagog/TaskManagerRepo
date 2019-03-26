@@ -57,6 +57,7 @@ public class ManagerInfoScreen extends JFrame {
 	private List<Project> projects;
 	private ManagerInfoScreen frame = this;
 	private JButton btnReset;
+	private JButton btnCreateProject;
 	
 
 	/**
@@ -153,6 +154,9 @@ public class ManagerInfoScreen extends JFrame {
 		
 		btnReset = new JButton("RESET");
 		
+		btnCreateProject = new JButton("Create Project");
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -172,7 +176,8 @@ public class ManagerInfoScreen extends JFrame {
 								.addComponent(btnCheckProjects, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
 								.addComponent(btnCheckUsersFor, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
 								.addComponent(btnCheckTasksFor, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-								.addComponent(btnReset))
+								.addComponent(btnReset)
+								.addComponent(btnCreateProject))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(listUsers, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
@@ -248,27 +253,10 @@ public class ManagerInfoScreen extends JFrame {
 							.addComponent(btnCheckTasks)
 							.addGap(39)
 							.addComponent(btnCheckProjects)
-							.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
 							.addComponent(btnReset)
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(29)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNewLabel)
-								.addComponent(lblUsers)
-								.addComponent(lblTasks_1))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-									.addComponent(listUsers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(listTasksForProject, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE))
-								.addComponent(listAllProjects, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(71)
-							.addComponent(btnCheckUsersFor)
-							.addGap(81)
-							.addComponent(btnCheckTasksFor))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(67)
 							.addComponent(btnAddUser)
@@ -278,7 +266,27 @@ public class ManagerInfoScreen extends JFrame {
 							.addGap(64)
 							.addComponent(btnAddTask)
 							.addGap(28)
-							.addComponent(btnRemoveTask)))
+							.addComponent(btnRemoveTask))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addGap(71)
+								.addComponent(btnCheckUsersFor)
+								.addGap(81)
+								.addComponent(btnCheckTasksFor)
+								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnCreateProject))
+							.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+								.addGap(29)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+									.addComponent(lblNewLabel)
+									.addComponent(lblUsers)
+									.addComponent(lblTasks_1))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+										.addComponent(listUsers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(listTasksForProject, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE))
+									.addComponent(listAllProjects, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)))))
 					.addGap(105))
 		);
 		contentPane.setLayout(gl_contentPane);
@@ -413,6 +421,19 @@ public class ManagerInfoScreen extends JFrame {
 				listProjects.setListData(l.toArray());
 				listTasks.setListData(l.toArray());
 				
+			}
+		});
+		
+		btnCreateProject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+			        public void run() 
+			        {
+			        	CreateProjectScreen createProjectScreen = new CreateProjectScreen(manager);
+			        	createProjectScreen.setVisible(true);
+			        	frame.dispose();
+			        }
+				});
 			}
 		});
 	}
