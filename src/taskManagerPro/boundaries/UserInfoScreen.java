@@ -233,7 +233,6 @@ public class UserInfoScreen extends JFrame {
 			        {
 			        	ProjectInfoScreen projectScreen = new ProjectInfoScreen(user);
 			        	projectScreen.setVisible(true);
-			        	frame.dispose();
 			        }
 				});
 			}
