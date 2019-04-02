@@ -117,5 +117,8 @@ public class DBManager {
 		
 	}
 
-
+	public boolean isUserPartOfProject(String email,String projectName){
+		
+		return imp.isUserPartOfProject(email,projectName);
+	}
 }

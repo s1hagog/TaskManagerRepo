@@ -562,10 +562,12 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 			for(Document project: projects) {
 				if(project.getString("name").equals(name)) {
 					List<Document> _tasks = (List<Document>)project.get("tasks");
-					for(Document task: _tasks) {
-						String s;
-						s = task.getString("name");
-						t_names.add(s);
+					if(_tasks != null) {
+						for(Document task: _tasks) {
+							String s;
+							s = task.getString("name");
+							t_names.add(s);
+						}
 					}
 				}
 			}
@@ -608,6 +610,17 @@ this.dbOpenConnection();
 		
 		this.dbCloseConnection();
 		
+	}
+
+	public boolean isUserPartOfProject(String email, String projectName) {
+		List<User> users = getUsersFromProject(projectName);
+		boolean isInProject = false;
+		for(User user: users) {
+			if(user.email.equals(email)) {
+				isInProject = true;
+			}
+		}		
+		return isInProject;
 	}
 
 

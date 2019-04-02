@@ -43,5 +43,10 @@ public class ManagerController {
 		
 	}
 	
+	public boolean isUserPartOfProject(String email,String projectName){
+		
+		return dbmgr.isUserPartOfProject(email,projectName);
+	}
+	
 
 }

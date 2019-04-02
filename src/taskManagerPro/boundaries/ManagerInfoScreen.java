@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JList;
@@ -59,6 +61,7 @@ public class ManagerInfoScreen extends JFrame {
 	private JButton btnReset;
 	private JButton btnCreateProject;
 	
+	private DefaultListModel dfm;
 
 	/**
 	 * Launch the application.
@@ -155,6 +158,9 @@ public class ManagerInfoScreen extends JFrame {
 		btnReset = new JButton("RESET");
 		
 		btnCreateProject = new JButton("Create Project");
+		
+		
+		
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -315,9 +321,10 @@ public class ManagerInfoScreen extends JFrame {
 				btnUnassignTask.setEnabled(true);
 				TaskController tc = new TaskController();
 				User user = (User) listAllUsers.getSelectedValue();
-				tasks = tc.getTasks(user.email);
-
-				listTasks.setListData(tasks.toArray());
+				if(user != null) {
+					tasks = tc.getTasks(user.email);
+					listTasks.setListData(tasks.toArray());
+				}				
 				
 			}
 		});
@@ -330,17 +337,22 @@ public class ManagerInfoScreen extends JFrame {
 				btnAssignProject.setEnabled(true);
 				ProjectController pc = new ProjectController();
 				User user = (User) listAllUsers.getSelectedValue();
-				projects = pc.getProjects(user.email);
-				listProjects.setListData(projects.toArray());
+				if(user != null) {
+					projects = pc.getProjects(user.email);
+					listProjects.setListData(projects.toArray());
+				}
 			}
 		});
 		
 		btnCheckUsersFor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProjectController pc = new ProjectController();
-				Project project = (Project)listAllProjects.getSelectedValue();
-				users = pc.getUsersFromProject(project.name);
-				listUsers.setListData(users.toArray());
+				Project project = (Project)listAllProjects.getSelectedValue();				
+				if(project != null) {
+					users = pc.getUsersFromProject(project.name);
+					listUsers.setListData(users.toArray());
+				}
+				
 			}
 		});
 		
@@ -348,24 +360,28 @@ public class ManagerInfoScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Project project = (Project)listAllProjects.getSelectedValue();
 				TaskController tc = new TaskController();
-			
-				tasks = tc.getTasks(manager.email, project);
+				if(project != null) {
+					tasks = tc.getTasks(manager.email, project);
+					
+					listTasksForProject.setListData(tasks.toArray());
+				}
 				
-				listTasksForProject.setListData(tasks.toArray());
 			}
 		});
 		
 		btnAddTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				final Project project = (Project)listAllProjects.getSelectedValue();
-				EventQueue.invokeLater(new Runnable() {
-			        public void run() 
-			        {
-			        	CreateNewTask createNewTask = new CreateNewTask(project, manager);
-			        	createNewTask.setVisible(true);
-			        	frame.dispose();
-			        }
-				});
+				if(project != null) {
+					EventQueue.invokeLater(new Runnable() {
+				        public void run() 
+				        {
+				        	CreateNewTask createNewTask = new CreateNewTask(project, manager);
+				        	createNewTask.setVisible(true);
+				        	frame.dispose();
+				        }
+					});
+				}
 			}
 		});
 		
@@ -375,16 +391,26 @@ public class ManagerInfoScreen extends JFrame {
 				User u = (User)listAllUsers.getSelectedValue();
 				Project p = (Project)listAllProjects.getSelectedValue();
 				ManagerController mc = new ManagerController();
-				mc.assignUserToProject(u, p);
+				if(u != null && p != null) {
+					if(!mc.isUserPartOfProject(u.email, p.name)){
+					mc.assignUserToProject(u, p);
+					
+					}
+				}				
 			}
 		});
 		
 		btnAssignTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Project p = (Project)listAllProjects.getSelectedValue();
 				User u = (User)listAllUsers.getSelectedValue();
 				Task t = (Task)listTasksForProject.getSelectedValue();
 				ManagerController mc = new ManagerController();
-				mc.assignTaskToUser(u, t);
+				if(u!= null && t!=null && p!= null) {
+					if(mc.isUserPartOfProject(u.email, p.name)){
+						mc.assignTaskToUser(u, t);
+					}					
+				}
 			}
 		});
 		
@@ -393,7 +419,9 @@ public class ManagerInfoScreen extends JFrame {
 				User u = (User)listAllUsers.getSelectedValue();
 				Project p = (Project)listAllProjects.getSelectedValue();
 				ManagerController mc = new ManagerController();
-				mc.unassignProject(u.email, p.name);
+				if(u != null && p !=null) {
+					mc.unassignProject(u.email, p.name);
+				}
 			}
 		});
 		
@@ -402,9 +430,10 @@ public class ManagerInfoScreen extends JFrame {
 				ManagerController mc = new ManagerController();
 				User u = (User)listAllUsers.getSelectedValue();
 				Task t = (Task)listTasks.getSelectedValue();
-				
-				mc.unassignTask(u.email, t.name);
-				
+				if(u!= null && t != null) {
+					
+					mc.unassignTask(u.email, t.name);
+				}
 			}
 		});
 		
@@ -413,7 +442,9 @@ public class ManagerInfoScreen extends JFrame {
 				User u = (User)listAllUsers.getSelectedValue();
 				Project p = (Project)listAllProjects.getSelectedValue();
 				ManagerController mc = new ManagerController();
-				mc.assignUserToProject(u, p);
+				if(u != null && p != null) {
+					mc.assignUserToProject(u, p);
+				}				
 			}
 		});
 		

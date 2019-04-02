@@ -90,6 +90,8 @@ public interface DBImplInterface {
 	//add new project in a project list
 	public void createProject(String email, Project p);
 
+	public boolean isUserPartOfProject(String email, String projectName);
+
 	
 
 }
