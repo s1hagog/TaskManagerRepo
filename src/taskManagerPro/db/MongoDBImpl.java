@@ -195,15 +195,18 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
 			org.bson.Document query = (org.bson.Document) collection.find(eq("email",username)).first();
 			List<Document> tasksData = (List<Document>)query.get("tasks");
-			for(Document taskData : tasksData) {
-				Task tempTask = new Task();
-//				tempTask._id = taskData.getInteger("_id");
-				tempTask.name = taskData.getString("name");
-				tempTask.description = taskData.getString("description");
-				tempTask.end_date = taskData.getDate("end_date");
-				tempTask.start_date = taskData.getDate("start_date");
-				tempTask.status = taskData.getString("status");
-				tasks.add(tempTask);
+			//tasksdata if null
+			if(tasksData !=  null) {
+				for(Document taskData : tasksData) {
+					Task tempTask = new Task();
+	//				tempTask._id = taskData.getInteger("_id");
+					tempTask.name = taskData.getString("name");
+					tempTask.description = taskData.getString("description");
+					tempTask.end_date = taskData.getDate("end_date");
+					tempTask.start_date = taskData.getDate("start_date");
+					tempTask.status = taskData.getString("status");
+					tasks.add(tempTask);
+				}
 			}
 			
 		} catch(MongoException mx) {
@@ -329,14 +332,18 @@ public class MongoDBImpl extends MongoDB implements DBImplInterface{
 		try {	
 			MongoCollection<Document> collection = this.mongoDB.getCollection("UserData");
 			org.bson.Document query = (org.bson.Document) collection.find(eq("email",userName)).first();
-			List<Document> projts = (List<Document>)query.get("project");
-			for(Document proj : projts) {
-				Project tempProject = new Project();
-				tempProject.name = proj.getString("name");
-				tempProject.description = proj.getString("description");
-				//tempProject.phase = proj.getString("status");
-				projects.add(tempProject);
+			// null check
+			if(query != null) {
+				List<Document> projts = (List<Document>)query.get("project");
+				for(Document proj : projts) {
+					Project tempProject = new Project();
+					tempProject.name = proj.getString("name");
+					tempProject.description = proj.getString("description");
+					//tempProject.phase = proj.getString("status");
+					projects.add(tempProject);
+				}
 			}
+			
 			
 		} catch(MongoException mx) {
 			System.out.println("Error getting tasks data");

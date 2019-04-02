@@ -316,6 +316,7 @@ public class ManagerInfoScreen extends JFrame {
 				TaskController tc = new TaskController();
 				User user = (User) listAllUsers.getSelectedValue();
 				tasks = tc.getTasks(user.email);
+
 				listTasks.setListData(tasks.toArray());
 				
 			}
@@ -347,7 +348,9 @@ public class ManagerInfoScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Project project = (Project)listAllProjects.getSelectedValue();
 				TaskController tc = new TaskController();
+			
 				tasks = tc.getTasks(manager.email, project);
+				
 				listTasksForProject.setListData(tasks.toArray());
 			}
 		});
